@@ -6,6 +6,7 @@ class FSM:
         self.symbols = symbols
         self.transitions = transitions
 
+
     # Method for checking fsm's input argument
     def __str__(self):
         return f"States: {self.states}\n" \
@@ -13,6 +14,61 @@ class FSM:
                f"End States: {self.end_states}\n" \
                f"Symbols: {self.symbols}\n" \
                f"Transitions: {self.transitions}"
+    
+
+    # Method for finding the next state
+    def transition(self, state, symbol):
+        return self.transitions.get((state, symbol))
+
+
+    # Method for string testing
+    def isAccept(self, test_string):
+        current_state = self.start_state
+        for char in test_string:
+            current_state = self.transition(current_state, char)
+
+        if current_state in self.end_states:
+            print("String accepted")
+        else:
+            print("String rejected")
+
+
+    # Method for minimizing if DFA
+    def minimize(self):
+        """
+        Reserved for checking FSM type
+        """
+
+        # 1. Eliminate unreachable state
+        # Using Breadth First Search algorithm to find all reachable state
+        reachable = [self.start_state]
+        track = [self.start_state]
+        while len(track) != 0:
+            state = track.pop()
+            for symbol in self.symbols:
+                tmp = self.transition(state, symbol)
+                if tmp not in reachable:
+                    track.append(tmp)
+                    reachable.append(tmp)
+
+        # Delete unreachable states from the main sate
+        new_states = []
+        for state in self.states:
+            if state in reachable:
+                new_states.append(state)
+        self.states = new_states
+
+        # Delete transitions to unreachable states
+        new_transitions = {}
+        for key in self.transitions:
+            state, symbol = key
+            next_state = self.transitions[key]
+            if state in reachable:
+                new_transitions[key] = next_state
+        self.transitions = new_transitions
+
+        # 2. Merge equivalent state
+
 
 fsm_states = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5']
 fsm_start_state = 'q0'
@@ -34,5 +90,11 @@ fsm_transitions = {
 }
 
 fsm = FSM(fsm_states, fsm_start_state, fsm_end_states, fsm_symbols, fsm_transitions)
+
+print(fsm)
+
+fsm.isAccept("bba")
+
+fsm.minimize()
 
 print(fsm)
