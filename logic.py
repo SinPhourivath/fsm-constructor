@@ -2,7 +2,7 @@ class FSM:
     def __init__(self, states, start_state, end_states, symbols, transitions):
         self.states = states
         self.start_state = start_state
-        self.end_states = end_states
+        self.final_states = end_states
         self.symbols = symbols
         self.transitions = transitions
 
@@ -11,7 +11,7 @@ class FSM:
     def __str__(self):
         return f"States: {self.states}\n" \
                f"Start State: {self.start_state}\n" \
-               f"End States: {self.end_states}\n" \
+               f"End States: {self.final_states}\n" \
                f"Symbols: {self.symbols}\n" \
                f"Transitions: {self.transitions}"
     
@@ -27,19 +27,13 @@ class FSM:
         for char in test_string:
             current_state = self.transition(current_state, char)
 
-        if current_state in self.end_states:
+        if current_state in self.final_states:
             print("String accepted")
         else:
             print("String rejected")
 
-
-    # Method for minimizing if DFA
-    def minimize(self):
-        """
-        Reserved for checking FSM type
-        """
-
-        # 1. Eliminate unreachable state
+    # Method for eliminating unreachable state
+    def removeUnreachable(self):
         # Using Breadth First Search algorithm to find all reachable state
         reachable = [self.start_state]
         track = [self.start_state]
@@ -67,12 +61,38 @@ class FSM:
                 new_transitions[key] = next_state
         self.transitions = new_transitions
 
-        # 2. Merge equivalent state
+
+    # Method for finding equivalent state
+    def mergeEquivalent(self):
+        # Setup all possible combination of state
+        distinguishable = {}
+        for p in self.states:
+            for q in self.states:
+                if p < q:
+                    distinguishable[(p, q)] = False
+
+        # Mark distinguishable if one is normal and one is final state
+        for p, q in distinguishable:
+            if (p in self.final_states) ^ (q in self.final_states):
+                distinguishable[(p, q)] = True
+
+        # Continue marking
+        
+
+    # Method for minimizing if DFA
+    def minimize(self):
+        
+        # Reserved for checking FSM type
+
+        self.removeUnreachable()
+
+        self.mergeEquivalent()
+
 
 
 fsm_states = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5']
 fsm_start_state = 'q0'
-fsm_end_states = ['q1', 'q2']
+fsm_final_states = ['q1', 'q2']
 fsm_symbols = ['a', 'b']
 fsm_transitions = {
     ('q0', 'a'): 'q1',
@@ -89,7 +109,7 @@ fsm_transitions = {
     ('q5', 'b'): 'q2'
 }
 
-fsm = FSM(fsm_states, fsm_start_state, fsm_end_states, fsm_symbols, fsm_transitions)
+fsm = FSM(fsm_states, fsm_start_state, fsm_final_states, fsm_symbols, fsm_transitions)
 
 print(fsm)
 
