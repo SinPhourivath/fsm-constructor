@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automata</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<style>
+    .state {
+        display: inline-block;
+        background-color: #f0f0f0;
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 5px;
+    }
+</style>
+</head>
+
+<body>
+    <header class="bg-#365679; p-2 ">
+        <h1 style="color: white; text-align: center;">TRIO</h1>
+    </header>
+    <form id="automata-form" method="post" action="{{ url_for('handle_form') }}">
+        <main class="containe">
+            <div class="row">
+                <div class="col-6">
+                    <section class="main-input">
+                        <div class="form-group">
+                            <label for="states">States</label>
+                            <input type="text" class="form-control" id="states" name="states" placeholder="Enter states">
+                        </div>
+                        <div class="form-group">
+                            <label for="symbols">Symbols</label>
+                            <input type="text" class="form-control" id="symbols" name="symbols" placeholder="Enter symbols">
+                        </div>
+                        <div class="form-group">
+                            <label for="start-state">Start State</label>
+                            <select class="form-control" id="start-state" name="start-state">
+                                <option value="">Select start state</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="final-states">Final States</label>
+                            <select class="form-control" id="final-states" name="final-states">
+                                <option value="">Select final states</option>
+                            </select>
+                            <br>
+                            <div id="selected-state">
+                                <p>Selected Final States:</p>
+                                <span id="selectedStatesContainer"></span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                    <div class="col-6">
+                        <h3>Our powerful features</h3>
+                        <section class="features">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">DFA or NFA</h5>
+                                            <button id="test-dfa-nfa" type="submit" class="btnn" data-action="test-dfa-nfa">TEST</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">NFA to DFA</h5>
+                                            <button id="convert-nfa-dfa" type="submit" class="btnn" data-action="convert-nfa-dfa">Convert</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Test if a string is accepted</h5>
+                                            <input type="text" class="form-control mb-2" id="testString" name="test-string" placeholder="Input a string">
+                                            <button id="test-string" type="submit" class="btnn" data-action="test-string">Test Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Minimize DFA</h5>
+                                            <button id="minimize-dfa" type="submit" class="btnn" data-action="minimize-dfa">Minimize</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h3>Transition Table</h3>
+                    <section class="transitions" id="transitions">
+                        <table class="table table-bordered" id="transition-table">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <!-- Symbols headers will be dynamically added here -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Transition rows will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+        </main>
+    </form>
+    <footer>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
