@@ -12,7 +12,11 @@ def handle_form():
     data = request.json
     action = data.get('action')
     states = list(data.get('states'))
+
+    # Don't need epsilon
     symbols = list(data.get('symbols'))
+    symbols = [s for s in symbols if 'epsilon' not in s]
+
     start_state = data.get('startState')
     final_states = list(data.get('finalStates'))
     test_string = data.get('testString')
@@ -42,19 +46,24 @@ def handle_form():
     
     fsm = logic.FSM(states, symbols, transitions, start_state, final_states)
 
-    if action == 'test-string':
-        result = fsm.accept(test_string)
-        print(result)
-    elif action == 'test-dfa-nfa':
-        result = fsm.is_dfa()
-        if result:
-            print("This is DFA")
-        else:
-            print("This is NFA")
-    elif action == 'convert-nfa-dfa':
-        dfa = fsm.convert_to_dfa()
-        
+    
+    match action:
+        case 'test-dfa-nfa':
+            result = fsm.is_dfa()
+            if result:
+                print("This is DFA")
+            else:
+                print("This is NFA")
+        case 'test-string':
+            result = fsm.accept(test_string)
+            print(result)
+        case 'convert-nfa-dfa':
+            dfa = fsm.convert_to_dfa()
+            dfa.draw()
+        case 'minimize-dfa':
+            fsm.minimize()
 
+    print(transitions)
 
     # # Print for debugging purpose
     # print("Action:", action)

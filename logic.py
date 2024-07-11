@@ -137,7 +137,7 @@ class FSM:
             if (p in self.final_states) ^ (q in self.final_states):
                 distinguishable[(p, q)] = True
 
-        # Continue marking untill no state 
+        # Continue marking 
         iterate = True
         while iterate:
             iterate = False
@@ -146,7 +146,7 @@ class FSM:
                     for symbol in self.symbols:
                         p_next = self.transition(p, symbol)
                         q_next = self.transition(q, symbol)
-                        if p_next != q_next and distinguishable[(p_next, q_next)]:
+                        if (p_next, q_next) in distinguishable and distinguishable[(p_next, q_next)]:
                             distinguishable[(p, q)] = True
                             iterate = True
                             break
@@ -159,10 +159,8 @@ class FSM:
             if p not in used_state:
                 equivalent_class = [p]
                 used_state.add(p)
-                available_state = list(set(self.states) - used_state)
-                for q in available_state:
-                    # Check if state q is equivalent to state p
-                    if distinguishable[(p, q)] == True:
+                for q in self.states:
+                    if q not in used_state and not distinguishable[(p, q)]:
                         equivalent_class.append(q)
                         used_state.add(q)
                 equivalent_classes.append(equivalent_class)
@@ -189,10 +187,11 @@ class FSM:
         for i, eq_class in enumerate(eq_classes):
             for state in eq_class:
                 for symbol in self.symbols:
-                    next_state = self.transitions[(state, symbol)]  # Get the transition of the old state
-                    new_transitions[(new_states[i], symbol)] = state_mapping[next_state]  # Map to the new transition
+                    next_state = self.transition(state, symbol)  # Get the transition of the old state
+                    if next_state is not None:
+                        new_transitions[(new_states[i], symbol)] = state_mapping[next_state]  # Map to the new transition
                
-        # diagram.draw_fsm(new_states, self.symbols, new_transitions, new_start_state, new_final_states)
+        return FSM(new_states, self.symbols, new_transitions, new_start_state, new_final_states)
 
     # Method for minimizing DFA
     def minimize(self):
@@ -260,30 +259,28 @@ class FSM:
         return FSM(dfa_states, self.symbols, dfa_transitions, start_state, dfa_final_states)
     
 
+    def draw(self):
+        dfa = diagram.draw_fsm(self.states, self.symbols, self.transitions, self.start_state, self.final_states)
+        dfa.render(cleanup=True)
+
+
 # fsm_states = ['q0', 'q1', 'q2', 'q3', 'q4']
+# fsm_start_state = 'q0'
+# fsm_final_states = ['q1', 'q3']
 # fsm_symbols = ['a', 'b']
 # fsm_transitions = {
-#     ('q0', ''): ('q1', 'q2'),
-#     ('q1', 'a'): 'q3',
-#     ('q2', 'b'): 'q4',
-#     ('q3', 'a'): 'q3',
-#     ('q4', 'b'): 'q4'
+#     ('q0', 'a'): 'q1',
+#     ('q0', 'b'): 'q1',
+#     ('q1', 'a'): 'q2',
+#     ('q1', 'b'): 'q2',
+#     ('q2', 'a'): 'q3',
+#     ('q2', 'b'): 'q3',
+#     ('q3', 'a'): 'q2',
+#     ('q3', 'b'): 'q2',
+#     ('q4', 'a'): 'q3',
+#     ('q4', 'b'): 'q2',
 # }
-# fsm_start_state = 'q0'
-# fsm_final_states = ['q3', 'q4']
-# # Why tuple? In Python, dictionary key must be immutable after creation. Also order must be preserve (current_state, symbol)
-# # Why set for multiple transisiton? Order doesn't matter and set is much more efficient
-# # Why list for other variable? List are not complicated, easy to append and pop as I will do operation on the original data
 
-# fsm = FSM(fsm_states, fsm_symbols, fsm_transitions, fsm_start_state, fsm_final_states)
-
-# print("DFA: ", fsm.is_dfa())
-
-# print(fsm.accept('aa'))
-
-# dfa = fsm.convert_to_dfa()
-
-# print("DFA: ", dfa.is_dfa())
-# print(dfa)
-# img = diagram.draw_fsm(fsm_states, fsm_symbols, fsm_transitions, fsm_start_state, fsm_final_states)
-# img.render(cleanup=True)
+# Why tuple? In Python, dictionary key must be immutable after creation. Also order must be preserve (current_state, symbol)
+# Why set for multiple transisiton? Order doesn't matter and set is much more efficient
+# Why list for other variable? List are not complicated, easy to append and pop as I will do operation on the original data
