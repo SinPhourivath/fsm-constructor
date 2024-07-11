@@ -27,7 +27,7 @@
     <form id="automata-form" method="post" action="{{ url_for('handle_form') }}">
         <main class="containe">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <section class="main-input">
                         <div class="form-group">
                             <label for="states">States</label>
@@ -56,51 +56,9 @@
                         </div>
                     </section>
                 </div>
-                    <div class="col-6">
-                        <h3>Our powerful features</h3>
-                        <section class="features">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">DFA or NFA</h5>
-                                            <button id="test-dfa-nfa" type="submit" class="btnn" data-action="test-dfa-nfa">TEST</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">NFA to DFA</h5>
-                                            <button id="convert-nfa-dfa" type="submit" class="btnn" data-action="convert-nfa-dfa">Convert</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Test if a string is accepted</h5>
-                                            <input type="text" class="form-control mb-2" id="testString" name="test-string" placeholder="Input a string">
-                                            <button id="test-string" type="submit" class="btnn" data-action="test-string">Test Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Minimize DFA</h5>
-                                            <button id="minimize-dfa" type="submit" class="btnn" data-action="minimize-dfa">Minimize</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <h3>Transition Table</h3>
                     <section class="transitions" id="transitions">
                         <table class="table table-bordered" id="transition-table">
@@ -115,6 +73,57 @@
                             </tbody>
                         </table>
                     </section>
+                </div>
+                
+                <div class="col-12">
+                    <h3>Our powerful features</h3>
+                    <section class="features">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">DFA or NFA</h5>
+                                        <button id="test-dfa-nfa" type="submit" class="btnn" data-action="test-dfa-nfa">TEST</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">NFA to DFA</h5>
+                                        <button id="convert-nfa-dfa" type="submit" class="btnn" data-action="convert-nfa-dfa">Convert</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Test if a string is accepted</h5>
+                                        <input type="text" class="form-control mb-2" id="testString" name="test-string" placeholder="Input a string">
+                                        <button id="test-string" type="submit" class="btnn" data-action="test-string">Test Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Minimize DFA</h5>
+                                        <button id="minimize-dfa" type="submit" class="btnn" data-action="minimize-dfa">Minimize</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="modal" id="resultModal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div id="modalGraph"></div>
+                        <p id="modalText"></p>
+                    </div>
                 </div>
         </main>
     </form>

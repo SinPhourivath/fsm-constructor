@@ -177,3 +177,32 @@ elect {
     width: 100% !important;
     max-width: 100%;
 }
+
+.containe {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1200px) {
+    .containe {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .containe {
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .containe {
+        width: 100%;
+        padding: 10px;
+    }
+}

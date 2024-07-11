@@ -260,8 +260,10 @@ class FSM:
     
 
     def draw(self):
-        dfa = diagram.draw_fsm(self.states, self.symbols, self.transitions, self.start_state, self.final_states)
-        dfa.render(cleanup=True)
+        png = diagram.draw_fsm(self.states, self.symbols, self.transitions, self.start_state, self.final_states)
+        png.render(cleanup=True)
+
+        return png
 
 
 # fsm_states = ['q0', 'q1', 'q2', 'q3', 'q4']

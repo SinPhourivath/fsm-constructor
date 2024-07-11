@@ -61,9 +61,12 @@ def handle_form():
             dfa = fsm.convert_to_dfa()
             dfa.draw()
         case 'minimize-dfa':
-            fsm.minimize()
+            mini = fsm.convert_to_dfa()
+            mini = mini.minimize()
+            mini.draw()
 
-    print(transitions)
+    graph_url = '/Diagraph.gv.png'  # Generate your graph image and save it
+    message = f'Action {action} performed successfully.'
 
     # # Print for debugging purpose
     # print("Action:", action)
@@ -75,7 +78,10 @@ def handle_form():
     # print(transitions)
     
     # Return a JSON response
-    return jsonify({"message": "Form data received", "data": data})
+    return jsonify({
+        'graphUrl': graph_url,
+        'message': message
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
