@@ -259,30 +259,31 @@ class FSM:
         
         return FSM(dfa_states, self.symbols, dfa_transitions, start_state, dfa_final_states)
     
-fsm_states = ['q0', 'q1', 'q2', 'q3', 'q4']
-fsm_symbols = ['a', 'b']
-fsm_transitions = {
-    ('q0', ''): ('q1', 'q2'),
-    ('q1', 'a'): 'q3',
-    ('q2', 'b'): 'q4',
-    ('q3', 'a'): 'q3',
-    ('q4', 'b'): 'q4'
-}
-fsm_start_state = 'q0'
-fsm_final_states = ['q3', 'q4']
-# Why tuple? In Python, dictionary key must be immutable after creation. Also order must be preserve (current_state, symbol)
-# Why set for multiple transisiton? Order doesn't matter and set is much more efficient
-# Why list for other variable? List are not complicated, easy to append and pop as I will do operation on the original data
 
-fsm = FSM(fsm_states, fsm_symbols, fsm_transitions, fsm_start_state, fsm_final_states)
+# fsm_states = ['q0', 'q1', 'q2', 'q3', 'q4']
+# fsm_symbols = ['a', 'b']
+# fsm_transitions = {
+#     ('q0', ''): ('q1', 'q2'),
+#     ('q1', 'a'): 'q3',
+#     ('q2', 'b'): 'q4',
+#     ('q3', 'a'): 'q3',
+#     ('q4', 'b'): 'q4'
+# }
+# fsm_start_state = 'q0'
+# fsm_final_states = ['q3', 'q4']
+# # Why tuple? In Python, dictionary key must be immutable after creation. Also order must be preserve (current_state, symbol)
+# # Why set for multiple transisiton? Order doesn't matter and set is much more efficient
+# # Why list for other variable? List are not complicated, easy to append and pop as I will do operation on the original data
 
-print("DFA: ", fsm.is_dfa())
+# fsm = FSM(fsm_states, fsm_symbols, fsm_transitions, fsm_start_state, fsm_final_states)
 
-print(fsm.accept('aa'))
+# print("DFA: ", fsm.is_dfa())
 
-dfa = fsm.convert_to_dfa()
+# print(fsm.accept('aa'))
 
-print("DFA: ", dfa.is_dfa())
-print(dfa)
-img = diagram.draw_fsm(fsm_states, fsm_symbols, fsm_transitions, fsm_start_state, fsm_final_states)
-img.render(cleanup=True)
+# dfa = fsm.convert_to_dfa()
+
+# print("DFA: ", dfa.is_dfa())
+# print(dfa)
+# img = diagram.draw_fsm(fsm_states, fsm_symbols, fsm_transitions, fsm_start_state, fsm_final_states)
+# img.render(cleanup=True)
